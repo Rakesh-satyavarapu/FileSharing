@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const FileDownload = () => {
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
@@ -12,7 +13,7 @@ const FileDownload = () => {
 
     setError("");
 
-    window.location.href = `http://localhost:8080/api/files/download?code=${code}`;
+    window.location.href = `${API_URL}/api/files/download?code=${code}`;
   };
 
   return (

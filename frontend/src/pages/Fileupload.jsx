@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
 const FileUpload = () => {
+
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +18,7 @@ const FileUpload = () => {
     formData.append("maxDownloads", e.target.maxDownloads.value);
 
     try {
-      const response = await fetch("http://localhost:8080/api/files/upload", {
+      const response = await fetch(`${API_URL}/api/files/upload`, {
         method: "POST",
         body: formData,
       });
