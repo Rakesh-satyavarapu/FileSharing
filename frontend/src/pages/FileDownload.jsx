@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
 const FileDownload = () => {
+
   const API_URL = process.env.REACT_APP_BACKEND_URL;
+
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
   const handleDownload = () => {
+
     if (!code.trim()) {
       setError("Please enter the access code");
       return;
@@ -16,76 +19,45 @@ const FileDownload = () => {
     window.location.href = `${API_URL}/api/files/download?code=${code}`;
   };
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#f4f6f9",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Arial",
-      }}
-    >
-      <div
-        style={{
-          width: "420px",
-          background: "#fff",
-          padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-          textAlign: "center",
-        }}
-      >
-        <h2 style={{ marginBottom: "20px" }}>Download File</h2>
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleDownload();
+    }
+  };
 
-        <p style={{ marginBottom: "20px", color: "#666" }}>
-          Enter the access code provided to download your file
-        </p>
+  return (
+    <div className="vault-container">
+
+      <h1 className="vault-title">
+        Download <span>File</span>
+      </h1>
+
+      <p className="vault-subtitle">
+        Enter the access code to download the file
+      </p>
+
+      <div className="download-box">
 
         <input
           type="text"
           placeholder="Enter access code"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            marginBottom: "15px",
-            fontSize: "14px",
-          }}
+          onKeyDown={handleKeyPress}
+          className="download-input"
         />
 
         <button
           onClick={handleDownload}
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#4f46e5",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontWeight: "bold",
-          }}
+          className="generate-btn"
         >
           Download File
         </button>
 
-        {error && (
-          <p
-            style={{
-              marginTop: "15px",
-              color: "red",
-              fontSize: "14px",
-            }}
-          >
-            {error}
-          </p>
-        )}
+        {error && <p className="download-error">{error}</p>}
+
       </div>
+
     </div>
   );
 };
